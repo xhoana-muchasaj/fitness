@@ -3,6 +3,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "store":["src/store.ts"]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -22,9 +25,15 @@
     ]
   },
   "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "entryModule": "app/app.module#AppModule",
+    "genDir": "./ngfactory"
   }
+
 }
+
+// "angularCompilerOptions": {
+//   // "enableI18nLegacyMessageIdFormat": false,
+//   // "strictInjectionParameters": true,
+//   // "strictInputAccessModifiers": true,
+//   // "strictTemplates": true
+// }
