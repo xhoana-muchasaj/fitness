@@ -1,26 +1,24 @@
-.app-header {
+  .app-header {
     background: #fff;
     border-bottom: 1px solid #c1cedb;
     padding: 15px 0;
-    text-align: left;
-    cursor: pointer;
-    // img {
-    //   display: inline-block;
-    // }
-    // &__user-info {
-    //   position: absolute;
-    //   top: 16px;
-    //   right: 0;
-    //   cursor: pointer;
-    // }
+    text-align: center;
+    img {
+      display: inline-block;
+    }
+    &__user-info {
+      position: absolute;
+      top: 16px;
+      right: 0;
+      cursor: pointer;
+    }
     span {
-      // background: url(/img/logout.svg) no-repeat;
-      background: #dbc8c1;
+      background:url(/assets/img/logout.svg) no-repeat;
       background-size: contain;
       width: 24px;
       height: 24px;
       display: block;
-      opacity: 1;
+      opacity: 0.4;
       &:hover {
         opacity: 0.9;
       }

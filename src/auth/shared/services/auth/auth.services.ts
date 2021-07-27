@@ -7,7 +7,7 @@ import 'rxjs/add/operator/do'
 import { AngularFireAuth } from "@angular/fire/auth";
 
 export interface User {
-    // email: string,
+    email: string|null,
     uid: string,
     authenticated: boolean
 }
@@ -25,7 +25,7 @@ export class AuthService {
                 return;
             }
             const user: User = {
-                // email: next.email,
+                email: next.email,
                 uid: next.uid,
                 authenticated: true
             };
@@ -38,7 +38,11 @@ export class AuthService {
 
     }
 
-    get authState(){
+    get user() {
+        return this.af.user;
+      }
+
+    get authState() {
         return this.af.authState;
     }
 
@@ -54,8 +58,8 @@ export class AuthService {
         return this.af
             .signInWithEmailAndPassword(email, password)
     }
-    logoutUser(){
+    logoutUser() {
         return this.af.signOut()
-        
+
     }
 }
