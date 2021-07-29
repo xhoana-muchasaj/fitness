@@ -6,8 +6,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
   styleUrls: ['list-item.component.scss'],
   template: `
     <div class="list-item">
-    {{item|json}}
-    <!--  <a [routerLink]="getRoute(item)">
+      <a [routerLink]="getRoute(item)">
         <p class="list-item__name">{{ item.name }}</p>
         <p class="list-item__ingredients">
           <span>
@@ -37,31 +36,32 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
         type="button"
         (click)="toggle()">
         <img src="assets/img/remove.svg">
-      </button> -->
+      </button> 
     </div>
   `
 })
 export class ListItemComponent {
 
-//   toggled = false;
+  toggled = false;
 
   @Input()
   item: any;
 
-//   @Output()
-//   remove = new EventEmitter<any>();
+  @Output()
+  remove = new EventEmitter<any>();
 
   constructor() {}
 
-//   toggle() {
-//     this.toggled = !this.toggled;
-//   }
+  toggle() {
+    this.toggled = !this.toggled;
+  }
 
-//   removeItem() {
-//     this.remove.emit(this.item);
-//   }
+  removeItem() {
+    this.remove.emit(this.item);
+  }
 
-//   getRoute(item: any) {
-//     return [`../meals`, item.$key];
-//   }
+  getRoute(item: any) { 
+    console.log(item.$key)
+    return [`../meals`, item.$key];
+  }
 }

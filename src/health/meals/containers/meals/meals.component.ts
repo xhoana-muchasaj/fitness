@@ -1,3 +1,4 @@
+import { ListItemComponent } from './../../../shared/components/list-item/list-item.component';
 import { Store } from 'store';
 import { Component, OnInit, OnDestroy } from "@angular/core";
 
@@ -30,12 +31,13 @@ import { Meal, MealsService } from './../../../shared/services/meals/meals.servi
         </div>
 
         <!-- meals ngFor -->
+
         <list-item
          *ngFor="let meal of meals"
-          [item]="meal"
+         [item]="meal"
           (remove)="removeMeal($event)">
          </list-item>
-
+ 
       </div>
       <ng-template #loading>
         <div class="message">
