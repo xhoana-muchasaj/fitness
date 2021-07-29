@@ -9,19 +9,20 @@ import { AuthService } from './../../../../auth/shared/services/auth/auth.servic
 
 
 export interface Meal {
-    name: string,
-    ingredients: string[],
-    timestamp: number,
-    $key: string,
-    $exists: () => boolean
+    name?: string,
+    ingredients?: string[],
+    timestamp?: number,
+    $key?: string,
+    $exists?: () => boolean
 }
 
 @Injectable()
 export class MealsService {
-    
-    meals$: Observable<Meal[]>|Observable<any> = this.db.list(`meals/${this.uid}`)
-    .valueChanges()
-    .do(next=> this.store.set('meals', next));
+
+    // meals$: Observable<Meal[]> | Observable<any> = this.db.list(`meals/${this.uid}`)
+    meals$: Observable<Meal[]> | Observable<any> = this.db.list(`meals/${this.uid}`)
+        .valueChanges()
+        .do(next => this.store.set('meals', next));
 
     constructor(
         private store: Store,
@@ -29,8 +30,13 @@ export class MealsService {
         private authService: AuthService
     ) {}
 
+  
     get uid() {
         // return this.authService.user.uid
         return 'tD2yShTmegXXYSOHsbtcMj36LFn2'
-      }
+    }
+    addMeal(meal: Meal) {
+        return this.db.list(`meals/${this.uid}`).push(meal)
+
+    }
 }

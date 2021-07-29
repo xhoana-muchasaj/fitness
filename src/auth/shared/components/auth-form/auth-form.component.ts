@@ -53,7 +53,7 @@ export class AuthFormComponent {
   constructor(private fb: FormBuilder) { }
 
   onSubmit() {
-    console.log('THIS', this)
+    // console.log('THIS', this)
 
     if(this.form.valid){
       //fire the event that will be listened in the parent components

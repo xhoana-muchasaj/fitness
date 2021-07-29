@@ -5,24 +5,32 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from 'src/auth/shared/shared.module';
 
+//components
+import { MealFormComponent } from './components/meal-form/meal-form.component'
+
 //containers
 import { MealsComponent } from './containers/meals/meals.component';
+import { MealComponent } from './containers/meal/meal.componet';
 
 export const ROUTES: Routes = [
 
-    { path: '', component: MealsComponent }
+    { path: '', component: MealsComponent },
+    { path: 'new', component: MealComponent }
 
 ]
 
 @NgModule({
     imports: [
         CommonModule,
-        ReactiveFormsModule, 
+        ReactiveFormsModule,
         RouterModule.forChild(ROUTES),
         SharedModule
     ],
     declarations: [
-        MealsComponent
+        MealsComponent,
+        MealComponent,
+        MealFormComponent
+
     ],
     providers: []
 })
