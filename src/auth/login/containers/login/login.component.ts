@@ -31,7 +31,7 @@ export class LoginComponent {
   ) { }
 
   async loginUser(event: FormGroup) {
-    console.log('VALUES', event.value)
+    // console.log('VALUES', event.value)
 
     const { email, password } = event.value;
 

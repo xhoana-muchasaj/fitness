@@ -7,10 +7,10 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
   template: `
     <div class="list-item">
       <a [routerLink]="getRoute(item)">
-        <p class="list-item__name">{{ item.name }}</p>
+        <p class="list-item__name">{{ item.val().name }}</p>
         <p class="list-item__ingredients">
           <span>
-            {{ item.ingredients }}
+            {{ item.val().ingredients }}
           </span>
         </p>
       </a>
@@ -61,7 +61,7 @@ export class ListItemComponent {
   }
 
   getRoute(item: any) { 
-    console.log(item.$key)
-    return [`../meals`, item.$key];
+    console.log(item)
+    return [`../meals`, item.key];
   }
 }

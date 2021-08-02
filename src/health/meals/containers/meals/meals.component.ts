@@ -1,4 +1,3 @@
-import { ListItemComponent } from './../../../shared/components/list-item/list-item.component';
 import { Store } from 'store';
 import { Component, OnInit, OnDestroy } from "@angular/core";
 
@@ -34,7 +33,7 @@ import { Meal, MealsService } from './../../../shared/services/meals/meals.servi
 
         <list-item
          *ngFor="let meal of meals"
-         [item]="meal"
+         [item]="meal.payload"
           (remove)="removeMeal($event)">
          </list-item>
  
@@ -56,11 +55,11 @@ export class MealsComponent implements OnInit, OnDestroy {
     constructor(
         private store: Store,
         private mealsService: MealsService
-    ) { }
+    ) {}
 
     ngOnInit() {
-        this.subscription = this.mealsService.meals$.subscribe()
-        this.meals$ = this.store.select<Meal[]>('meals');
+      this.subscription = this.mealsService.meals$.subscribe()
+      this.meals$ = this.store.select<Meal[]>('meals');
     }
 
     ngOnDestroy() {
@@ -68,7 +67,7 @@ export class MealsComponent implements OnInit, OnDestroy {
     }
 
     removeMeal(event: Meal) {
-      // this.mealsService.removeMeal(event.$key);
+      this.mealsService.removeMeal(event);
     }
 
 }

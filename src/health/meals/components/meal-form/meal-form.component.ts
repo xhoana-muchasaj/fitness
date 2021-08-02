@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnChanges, SimpleChanges,Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { Meal } from '../../../shared/services/meals/meals.service';
@@ -49,14 +49,42 @@ import { Meal } from '../../../shared/services/meals/meals.service';
             <button
               type="button"
               class="button"
+              *ngIf="!exists"
               (click)="createMeal()">
               Create meal
+            </button>
+            <button
+              type="button"
+              class="button"
+              *ngIf="exists"
+              (click)="updateMeal()">
+              Save
             </button>
             <a 
               class="button button--cancel"
               [routerLink]="['../']">
               Cancel
             </a>
+          </div>
+          <div class="meal-form__delete" *ngIf="exists">
+            <div *ngIf="toggled">
+              <p>Delete item?</p>
+              <button 
+                class="confirm"
+                type="button"
+                (click)="removeMeal()">
+                Yes
+              </button>
+              <button 
+                class="cancel"
+                type="button"
+                (click)="toggle()">
+                No
+              </button>
+            </div>
+            <button class="button button--delete" type="button" (click)="toggle()">
+              Delete
+            </button>
           </div>
         </div>
       </form>
@@ -65,17 +93,54 @@ import { Meal } from '../../../shared/services/meals/meals.service';
 })
 export class MealFormComponent {
 
+  toggled = false;
+  exists = false;
+
+
+  @Input()
+  meal?: Meal;
+
   @Output()
-  create=new EventEmitter<Meal>();
+  create = new EventEmitter<Meal>();
+
+  @Output()
+  update = new EventEmitter<Meal>();
+
+  @Output()
+  remove = new EventEmitter<Meal>();
 
   form = this.fb.group({
     name: ['', Validators.required],
     ingredients: this.fb.array([''])
   });
-  
+
   constructor(
     private fb: FormBuilder
-  ) {}
+  ) { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(this.meal)
+    if (this.meal && this.meal.name) {
+      this.exists = true;
+      this.emptyIngredients();
+
+      const value = this.meal;
+      this.form.patchValue(value);
+
+      if (value.ingredients) {
+        for (const item of value.ingredients) {
+          this.ingredients.push(new FormControl(item));
+        }
+      }
+
+    }
+  }
+
+  emptyIngredients() {
+    while(this.ingredients.controls.length) {
+      this.ingredients.removeAt(0);
+    }
+  }
 
   get required() {
     return (
