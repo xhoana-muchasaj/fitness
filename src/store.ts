@@ -9,19 +9,21 @@ import { Meal } from './health/shared/services/meals/meals.service';
 
 export interface State {
   user: User | undefined,
-  meals:Meal[]|undefined,
+  meals: Meal[] | undefined,
   [key: string]: any
 }
 
+//object of type state that is needed to pass to the BehaviorSubject 
+//for the initialization of the store
 const state: State = {
   user: undefined,
-  meals:undefined
+  meals: undefined
 
 };
 
 export class Store {
 
-  private subject = new BehaviorSubject<State>(state);
+  private subject = new BehaviorSubject<State>(state); //creates a new instance
   private store = this.subject.asObservable().distinctUntilChanged();
 
   get value() {
