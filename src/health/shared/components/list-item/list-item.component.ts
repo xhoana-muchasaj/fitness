@@ -16,7 +16,9 @@ export class ListItemComponent {
   @Output()
   remove = new EventEmitter<any>();
 
-  constructor() {}
+  constructor() {
+    console.log('item',this.item)
+  }
 
   toggle() {
     this.toggled = !this.toggled;

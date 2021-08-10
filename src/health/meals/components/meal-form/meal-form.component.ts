@@ -81,8 +81,22 @@ export class MealFormComponent implements OnChanges  {
 
   createMeal() {
     if (this.form.valid) {
-      this.create.emit(this.form.value)
+      this.create.emit(this.form.value);
     }
+  }
+
+  updateMeal() {
+    if (this.form.valid) {
+      this.update.emit(this.form.value);
+    }
+  }
+
+  removeMeal() {
+    this.remove.emit(this.form.value);
+  }
+
+  toggle() {
+    this.toggled = !this.toggled;
   }
 
 }

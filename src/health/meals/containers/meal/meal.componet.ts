@@ -10,6 +10,7 @@ import { switchMap } from 'rxjs/operators';
   selector: 'meal',
   styleUrls: ['meal.component.scss'],
   templateUrl:'meal.component.html'
+
 })
 export class MealComponent implements OnInit, OnDestroy {
 
@@ -63,6 +64,3 @@ export class MealComponent implements OnInit, OnDestroy {
 
 }
 
-function err(err: any): import("rxjs/Observable").ObservableInput<any> {
-  throw new Error('Function not implemented.');
-}

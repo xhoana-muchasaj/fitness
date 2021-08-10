@@ -93,7 +93,7 @@
       display: block;
       position: absolute;
       top: 1px;
-      right: 1px;
+      right: -5px;
       border-left: 1px solid #d1deeb;
       transition: all .2s ease-in-out;
       &:hover {
@@ -128,7 +128,7 @@
     input {
       outline: 0;
       font-size: 16px;
-      padding: 10px 40px 10px 15px;
+      padding: 10px 2px;
       margin: 0;
       width: 100%;
       background: #fff;

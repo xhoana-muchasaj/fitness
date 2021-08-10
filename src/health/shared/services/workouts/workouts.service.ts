@@ -12,20 +12,22 @@ import 'rxjs/add/observable/of';
 import { AuthService } from './../../../../auth/shared/services/auth/auth.services';
 
 
-export interface Meal {
+export interface Workout {
     name: string,
-    ingredients: string[],
+    type: string, 
+    strength: any,
+    endurance: any,
     timestamp: number,
     $key: string,
     $exists?: () => boolean
 }
 
 @Injectable()
-export class MealsService {
+export class WorkoutsService {
 
-    meals$: Observable<Meal[]> | Observable<any[]> = this.db.list(`meals/${this.uid}`)
+    workouts$: Observable<Workout[]> | Observable<any[]> = this.db.list(`workouts/${this.uid}`)
         .snapshotChanges()/////ask erlandinnnnnnnn
-        .do(next => this.store.set('meals', next));
+        .do(next => this.store.set('workouts', next));
 
     constructor(
         private store: Store,
@@ -33,11 +35,11 @@ export class MealsService {
         private authService: AuthService
     ) {}
 
-    getMeal(key: string) {
+    getWorkout(key: string) {
 
         if (!key) return Observable.of({});
 
-        return this.store.select<Meal[]>('meals')
+        return this.store.select<Workout[]>('meals')
             .filter(Boolean) //if the store is empty this boolean will stop te stream 
             .map(meals => meals.find((meal: any) => meal.key === key));
         // .map( meals => meals.find((meal:Meal) => meal.$key === key)); //ask erlandin
@@ -49,19 +51,19 @@ export class MealsService {
 
         return 'tD2yShTmegXXYSOHsbtcMj36LFn2'
     }
-
-    addMeal(meal: Meal) {
-        return this.db.list(`meals/${this.uid}`).push(meal)
+    
+    addWorkout(workout: Workout) {
+        return this.db.list(`workouts/${this.uid}`).push(workout)
     }
 
-    updateMeal(key: string, meal: Meal) {
-        return this.db.object(`meals/${this.uid}/${key}`).update(meal);
+    updateWorkout(key: string, workout: Workout) {
+        return this.db.object(`workouts/${this.uid}/${key}`).update(workout);
     }
 
-    removeMeal(payload: any) {
+    removeWorkout(payload: any) {
         //passed this way because we are using snapshotChanges() 
         //and as meal we return the payload that has the key inside and the other info
-        return this.db.list(`meals/${this.uid}`).remove(payload.key)
+        return this.db.list(`workouts/${this.uid}`).remove(payload.key)
     }
 
     
