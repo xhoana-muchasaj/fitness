@@ -1,47 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Meal, MealsService } from '../../../shared/services/meals/meals.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/switchMap';
-
+// import 'rxjs/add/operator/switchMap';
+import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'meal',
   styleUrls: ['meal.component.scss'],
-  template: `
-    <div class="meal">
-      <div class="meal__title">
-        <h1>
-          <img src="assets/img/food.svg">
-          <span *ngIf="meal$ | async as meal; else title;">
-            {{ meal? 'Edit' : 'Create' }} meal
-          </span>
-          <ng-template #title>
-            Loading...
-          </ng-template>
-        </h1>
-      </div>
-      <div *ngIf="meal$ | async as meal; else loading;">
-        <meal-form
-          [meal]="meal"
-          (create)="addMeal($event)"
-          (update)="updateMeal($event)"
-          (remove)="removeMeal($event)">
-        </meal-form>
-      </div>
-      <ng-template #loading>
-        <div class="message">
-          <img src="assets/img/loading.svg">
-          Fetching meal...
-        </div>
-      </ng-template>
-    </div>
-  `
+  templateUrl:'meal.component.html'
 })
 export class MealComponent implements OnInit, OnDestroy {
 
-  meal$?: Observable<Meal>;
+  meal$?: Observable<Meal>|Observable<any>;
   subscription?: Subscription;
 
   constructor(
@@ -52,14 +24,14 @@ export class MealComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.mealsService.meals$.subscribe();
-    console.log('MEALLLLL',this.meal$)
-    console.log(this.activeRoute.params)
-    /////////////////////////////////////////
-    /////////////////////////problemmmmmmmm
-    ///////////////////////////////////////////
-    // this.meal$ = this.activeRoute.params
-      // .switchMap(param => this.mealsService.getMeal(param.id))
-    
+    this.meal$=this.activeRoute.params
+    .pipe(
+      switchMap((params:Params)=>{
+        return this.mealsService.getMeal(params.id)
+      })
+    )
+ 
+  
   }
 
   ngOnDestroy() {

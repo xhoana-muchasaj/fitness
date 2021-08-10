@@ -37,7 +37,6 @@ export class AuthService {
         private af: AngularFireAuth) { }
 
     get user() {
-        console.log('AFF', this.af)
         return this.af.currentUser
     }
 

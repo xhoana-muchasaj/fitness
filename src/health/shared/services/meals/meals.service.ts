@@ -1,3 +1,4 @@
+import { switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 
@@ -23,47 +24,30 @@ export interface Meal {
 @Injectable()
 export class MealsService {
 
-    meals$: Observable<Meal[]> | Observable<any> = this.db.list(`meals/${this.uid}`)
-        .snapshotChanges()
+    meals$: Observable<Meal[]> | Observable<any[]> = this.db.list(`meals/${this.uid}`)
+        .snapshotChanges()/////ask erlandinnnnnnnn
         .do(next => this.store.set('meals', next));
 
     constructor(
         private store: Store,
         private db: AngularFireDatabase,
         private authService: AuthService
-    ) { }
+    ) {}
 
-
-    // getMeal(key: string) {
-    //     console.log('aaaaa',this.store.select<Meal[]>('meals')
-    //     .filter(Boolean)
-    //     .map(meals => meals.find((meal: Meal) => meal.$key === key)))
-
-
-    //     if (!key) return Observable.of({});
-
-    //     return this.store.select<Meal[]>('meals')
-    //         .filter(Boolean)
-    //         .map(meals => meals.find((meal: Meal) => meal.$key === key));
-    // }
     getMeal(key: string) {
-        console.log('aaaaa', this.store.select<Meal[]>('meals')
-            .filter(Boolean)
-            .map(meals => meals.find((meal: Meal) => meal.$key === '-Mfmwp9AjVUiBioYeVCv')))
-
 
         if (!key) return Observable.of({});
 
         return this.store.select<Meal[]>('meals')
-            .filter(Boolean)
-            .map(meals => meals.find((meal: Meal) => meal.$key === key));
+            .filter(Boolean) //if the store is empty this boolean will stop te stream 
+            .map(meals => meals.find((meal: any) => meal.key === key));
+        // .map( meals => meals.find((meal:Meal) => meal.$key === key)); //ask erlandin
     }
 
     get uid() {
+        ///////////////////to  fix
+        // return this.authService.user.uid
 
-      this.authService.user.then((us: any) => {
-             return us.uid
-         })
         return 'tD2yShTmegXXYSOHsbtcMj36LFn2'
     }
     addMeal(meal: Meal) {

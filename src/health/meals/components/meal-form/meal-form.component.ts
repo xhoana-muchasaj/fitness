@@ -7,98 +7,16 @@ import { Meal } from '../../../shared/services/meals/meals.service';
   selector: 'meal-form',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['meal-form.component.scss'],
-  template: `
-    <div class="meal-form">
-      
-      <form [formGroup]="form">
-        <div class="meal-form__name">
-          <label>
-            <h3>Meal name</h3>
-            <input 
-              type="text" 
-              placeholder="e.g. English Breakfast" 
-              formControlName="name">
-            <div class="error" *ngIf="required">
-              Workout name is required
-            </div>
-          </label>
-        </div>
-        <div class="meal-form__food">
-          <div class="meal-form__subtitle">
-            <h3>Food</h3>
-            <button 
-              type="button"
-              class="meal-form__add"
-              (click)="addIngredient()">
-              <img src="assets/img/add-white.svg">
-              Add food
-            </button>
-          </div>
-          <div formArrayName="ingredients">
-            <label *ngFor="let c of ingredients.controls; index as i;">
-              <input [formControlName]="i" placeholder="e.g. Eggs">
-              <span
-                class="meal-form__remove"
-                (click)="removeIngredient(i)">
-              </span>
-            </label>
-          </div>
-        </div>
-        <div class="meal-form__submit">
-          <div>
-            <button
-              type="button"
-              class="button"
-              *ngIf="!exists"
-              (click)="createMeal()">
-              Create meal
-            </button>
-            <button
-              type="button"
-              class="button"
-              *ngIf="exists"
-              (click)="updateMeal()">
-              Save
-            </button>
-            <a 
-              class="button button--cancel"
-              [routerLink]="['../']">
-              Cancel
-            </a>
-          </div>
-          <div class="meal-form__delete" *ngIf="exists">
-            <div *ngIf="toggled">
-              <p>Delete item?</p>
-              <button 
-                class="confirm"
-                type="button"
-                (click)="removeMeal()">
-                Yes
-              </button>
-              <button 
-                class="cancel"
-                type="button"
-                (click)="toggle()">
-                No
-              </button>
-            </div>
-            <button class="button button--delete" type="button" (click)="toggle()">
-              Delete
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  `
+  templateUrl:'meal-form.component.html'
 })
-export class MealFormComponent {
+export class MealFormComponent implements OnChanges  {
 
   toggled = false;
   exists = false;
 
 
   @Input()
-  meal?: Meal;
+  meal?: Meal|any;//to fix
 
   @Output()
   create = new EventEmitter<Meal>();
@@ -119,12 +37,12 @@ export class MealFormComponent {
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.meal)
-    if (this.meal && this.meal.name) {
+    // console.log(this.meal)
+    if (this.meal.payload) {
       this.exists = true;
       this.emptyIngredients();
 
-      const value = this.meal;
+      const value = this.meal.payload.val();
       this.form.patchValue(value);
 
       if (value.ingredients) {
