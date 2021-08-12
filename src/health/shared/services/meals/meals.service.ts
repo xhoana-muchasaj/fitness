@@ -4,10 +4,10 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { Store } from './../../../../store';
 
 import { Observable } from 'rxjs/Observable';
+import { of } from "rxjs";
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of';
 
 import { AuthService } from './../../../../auth/shared/services/auth/auth.services';
 
@@ -35,7 +35,8 @@ export class MealsService {
 
     getMeal(key: string) {
 
-        if (!key) return Observable.of({});
+        if (!key) return of({}) //in rxjs 6 its not used any more Observable.of({})
+    
 
         return this.store.select<Meal[]>('meals')
             .filter(Boolean) //if the store is empty this boolean will stop te stream 

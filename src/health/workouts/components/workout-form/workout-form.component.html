@@ -4,7 +4,7 @@
         <div class="workout-form__name">
             <label>
                 <h3>Workout name</h3>
-                <input type="text" placeholder="e.g. Workout" formControlName="name">
+                <input type="text" [placeholder]="placeholder" formControlName="name">
                 <div class="error" *ngIf="required">
                     Workout name is required
                 </div>
@@ -19,7 +19,7 @@
         </div>
 
 
-        <div>
+        <div class="workout-form__details">
             <div *ngIf="form.get('type')?.value === 'strength'">
                 <div class="workout-form__fields" formGroupName="strength">
                     <label>

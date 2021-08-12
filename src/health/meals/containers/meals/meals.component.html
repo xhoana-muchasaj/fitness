@@ -17,7 +17,7 @@
 
         <!-- meals ngFor -->
 
-        <list-item *ngFor="let meal of meals" [item]="meal.payload" (remove)="removeMeal($event)">
+        <list-item *ngFor="let meal of meals" [item]="meal" (remove)="removeMeal($event)">
         </list-item>
 
     </div>

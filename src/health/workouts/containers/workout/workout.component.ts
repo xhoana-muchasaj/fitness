@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-// import 'rxjs/add/operator/switchMap';
 
 import { WorkoutsService, Workout } from '../../../shared/services/workouts/workouts.service';
 import { switchMap } from 'rxjs/operators';
@@ -22,13 +21,13 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     private workoutsService: WorkoutsService,
     private router: Router,
     private activeRoute: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.subscription = this.workoutsService.workouts$.subscribe();
     this.workout$ = this.activeRoute.params
       .pipe(
-        switchMap(param => this.workoutsService.getWorkout(param.id))
+        switchMap(params => { return this.workoutsService.getWorkout(params.id) })
       );
   }
 

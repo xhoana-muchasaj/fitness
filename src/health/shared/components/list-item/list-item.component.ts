@@ -16,9 +16,7 @@ export class ListItemComponent {
   @Output()
   remove = new EventEmitter<any>();
 
-  constructor() {
-    console.log('item',this.item)
-  }
+  constructor() { }
 
   toggle() {
     this.toggled = !this.toggled;
@@ -28,8 +26,11 @@ export class ListItemComponent {
     this.remove.emit(this.item);
   }
 
-  getRoute(item: any) { 
-    // console.log(item)
-    return [`../meals`, item.key];
+
+  getRoute(item: any) {
+    return [
+      `../${item.payload.val().ingredients ? 'meals' : 'workouts'}`,
+      item.key
+    ];
   }
 }

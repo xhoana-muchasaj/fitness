@@ -3,7 +3,7 @@
         <h1>
             <img src="assets/img/food.svg">
             <span *ngIf="meal$ | async as meal; else title;">
-                {{ meal.payload ? 'Edit' : 'Create' }} meal
+                {{ meal.payload? 'Edit' : 'Create' }} meal
             </span>
             <ng-template #title>
                 Loading...
@@ -11,11 +11,7 @@
         </h1>
     </div>
     <div *ngIf="meal$ | async as meal; else loading;">
-        <meal-form 
-        [meal]="meal" 
-        (create)="addMeal($event)" 
-        (update)="updateMeal($event)" 
-        (remove)="removeMeal($event)">
+        <meal-form [meal]="meal" (create)="addMeal($event)" (update)="updateMeal($event)" (remove)="removeMeal($event)">
         </meal-form>
     </div>
     <ng-template #loading>

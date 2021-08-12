@@ -14,7 +14,7 @@
       <img src="assets/img/face.svg">
       No workouts, add a new workout to start
     </div>
-    <list-item *ngFor="let workout of workouts" [item]="workout.payload" (remove)="removeWorkout($event)">
+    <list-item *ngFor="let workout of workouts" [item]="workout" (remove)="removeWorkout($event)">
     </list-item>
   </div>
   <ng-template #loading>

@@ -6,12 +6,17 @@ import { RouterModule } from "@angular/router";
 import { AngularFireDatabaseModule } from "@angular/fire/database";
 
 //components
-import {ListItemComponent} from './components/list-item/list-item.component'
+import { ListItemComponent } from './components/list-item/list-item.component'
 
 
 //services
-import {MealsService} from './services/meals/meals.service'
+import { MealsService } from './services/meals/meals.service'
 import { WorkoutsService } from './services/workouts/workouts.service';
+import { ScheduleService } from './services/schedule/schedule.service';
+
+//pipes
+import { JoinPipe } from "./pipes/join.pipe";
+import { WorkoutPipe } from "./pipes/workout.pipe";
 
 
 
@@ -23,10 +28,14 @@ import { WorkoutsService } from './services/workouts/workouts.service';
         AngularFireDatabaseModule
     ],
     declarations: [
-        ListItemComponent
+        ListItemComponent,
+        JoinPipe,
+        WorkoutPipe
     ],
     exports: [
-        ListItemComponent
+        ListItemComponent,
+        JoinPipe,
+        WorkoutPipe
     ]
 })
 export class SharedModule {
@@ -36,7 +45,8 @@ export class SharedModule {
             ngModule: SharedModule,
             providers: [
                 MealsService,
-                WorkoutsService
+                WorkoutsService,
+                ScheduleService
             ]
         };
 

@@ -7,8 +7,8 @@ import { Workout } from '../../../shared/services/workouts/workouts.service';
   selector: 'workout-form',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['workout-form.component.scss'],
-  templateUrl:'workout-form.component.html'
-  
+  templateUrl: 'workout-form.component.html'
+
 })
 export class WorkoutFormComponent implements OnChanges {
 
@@ -16,7 +16,7 @@ export class WorkoutFormComponent implements OnChanges {
   exists = false;
 
   @Input()
-  workout?: Workout;
+  workout?: Workout | any;
 
   @Output()
   create = new EventEmitter<Workout>();
@@ -40,37 +40,25 @@ export class WorkoutFormComponent implements OnChanges {
       duration: 0
     })
   });
-  
+
   constructor(
     private fb: FormBuilder
-  ) {}
+  ) { }
+
+  get placeholder() {
+
+    return `e.g. ${this.form.get('type')?.value === 'strength'
+      ? 'Benchpress'
+      : 'Treadmill'}`;
+  }
 
   ngOnChanges(changes: SimpleChanges) {
-    // if (this.meal && this.meal.name) {
-    //   this.exists = true;
-    //   this.emptyIngredients();
-
-    //   const value = this.meal;
-    //   this.form.patchValue(value);
-
-    //   if (value.ingredients) {
-    //     for (const item of value.ingredients) {
-    //       this.ingredients.push(new FormControl(item));
-    //     }
-    //   }
-
     if (this.workout && this.workout.payload) {
       this.exists = true;
-      const value = this.workout.payload.val;
+      const value = this.workout.payload.val();
       this.form.patchValue(value);
     }
   }
-
-  // emptyIngredients() {
-  //   while(this.ingredients.controls.length) {
-  //     this.ingredients.removeAt(0);
-  //   }
-  // }
 
   get required() {
     return (
@@ -78,18 +66,6 @@ export class WorkoutFormComponent implements OnChanges {
       this.form.get('name')?.touched
     );
   }
-
-  // get ingredients() {
-  //   return this.form.get('ingredients') as FormArray;
-  // }
-
-  // addIngredient() {
-  //   this.ingredients.push(new FormControl(''));
-  // }
-
-  // removeIngredient(index: number) {
-  //   this.ingredients.removeAt(index);
-  // }
 
   createWorkout() {
     if (this.form.valid) {

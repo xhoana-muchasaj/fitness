@@ -1,4 +1,4 @@
-import { Component, OnChanges, SimpleChanges,Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { Meal } from '../../../shared/services/meals/meals.service';
@@ -7,16 +7,16 @@ import { Meal } from '../../../shared/services/meals/meals.service';
   selector: 'meal-form',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['meal-form.component.scss'],
-  templateUrl:'meal-form.component.html'
+  templateUrl: 'meal-form.component.html'
 })
-export class MealFormComponent implements OnChanges  {
+export class MealFormComponent implements OnChanges {
 
   toggled = false;
   exists = false;
 
 
   @Input()
-  meal?: Meal|any;//to fix
+  meal?: Meal | any;//to fix
 
   @Output()
   create = new EventEmitter<Meal>();
@@ -37,8 +37,8 @@ export class MealFormComponent implements OnChanges  {
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    // console.log(this.meal)
-    if (this.meal.payload) {
+
+    if (this.meal && this.meal.payload) {
       this.exists = true;
       this.emptyIngredients();
 
@@ -55,7 +55,7 @@ export class MealFormComponent implements OnChanges  {
   }
 
   emptyIngredients() {
-    while(this.ingredients.controls.length) {
+    while (this.ingredients.controls.length) {
       this.ingredients.removeAt(0);
     }
   }
