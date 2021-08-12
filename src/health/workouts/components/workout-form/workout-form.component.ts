@@ -59,7 +59,11 @@ export class WorkoutFormComponent implements OnChanges {
     //     }
     //   }
 
-    // }
+    if (this.workout && this.workout.payload) {
+      this.exists = true;
+      const value = this.workout.payload.val;
+      this.form.patchValue(value);
+    }
   }
 
   // emptyIngredients() {
