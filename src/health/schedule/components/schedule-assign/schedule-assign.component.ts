@@ -26,7 +26,7 @@ export class ScheduleAssignComponent implements OnInit {
   cancel = new EventEmitter<any>();
 
   ngOnInit() {
-      console.log(this.section)
+    console.log(this.list)
       this.selected = [...this.section.assigned];
       
   }

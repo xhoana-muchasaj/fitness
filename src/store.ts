@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs'; // using from 'rxjs/BehaviorSubject' fai
 import 'rxjs/add/operator/pluck';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import { User } from './auth/shared/services/auth/auth.services';
+import { User } from './auth/shared/services/auth/auth.service';
 import { Meal } from './health/shared/services/meals/meals.service';
 import { Workout } from './health/shared/services/workouts/workouts.service';
 import { ScheduleItem } from './health/shared/services/schedule/schedule.service';

@@ -2,7 +2,7 @@ import { FormGroup } from '@angular/forms';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from 'src/auth/shared/services/auth/auth.services';
+import { AuthService } from 'src/auth/shared/services/auth/auth.service';
 
 @Component({
   selector: 'register',

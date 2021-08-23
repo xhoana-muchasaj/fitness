@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AuthFormComponent } from "./components/auth-form/auth-form.component";
 
 //services
-import { AuthService } from "./services/auth/auth.services";
+import { AuthService } from "./services/auth/auth.service";
 
 //guards
 import { AuthGuard } from "./guards/auth.guards";

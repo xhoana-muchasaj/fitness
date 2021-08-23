@@ -4,12 +4,12 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { Store } from './../../../../store';
 
 import { Observable } from 'rxjs/Observable';
-import { of } from "rxjs";
-import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
+import { of } from "rxjs";
+import { tap } from 'rxjs/operators';
 
-import { AuthService } from './../../../../auth/shared/services/auth/auth.services';
+import { AuthService } from '../../../../auth/shared/services/auth/auth.service';
 
 
 export interface Meal {
@@ -25,7 +25,7 @@ export class MealsService {
 
     meals$: Observable<Meal[]> | Observable<any[]> = this.db.list(`meals/${this.uid}`)
         .snapshotChanges()/////ask erlandinnnnnnnn
-        .do(next => this.store.set('meals', next));
+        .pipe(tap(next => this.store.set('meals', next)));
 
     constructor(
         private store: Store,
@@ -45,10 +45,8 @@ export class MealsService {
     }
 
     get uid() {
-        ///////////////////to  fix
-        // return this.authService.user.uid
+        return this.authService.user?.uid
 
-        return 'tD2yShTmegXXYSOHsbtcMj36LFn2'
     }
 
     addMeal(meal: Meal) {

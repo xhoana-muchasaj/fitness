@@ -4,7 +4,7 @@ import { CanActivate, Router } from "@angular/router";
 
 import 'rxjs/add/operator/map';
 
-import { AuthService } from '../services/auth/auth.services';
+import { AuthService } from '../services/auth/auth.service';
 
 @Injectable()
 
