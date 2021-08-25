@@ -73,20 +73,13 @@ export class ScheduleService {
 
   //list of items dispalyed in the modal (meals or workouts)
   list$ = this.section$
-    .map((value: any) => {
-      this.store.value[value.type]
-    })
-    .pipe(tap((next: any) => {
-      this.store.set('list', next)
-    }));
+    .map((value: any) => this.store.value[value.type])
+    .pipe(tap((next: any) => this.store.set('list', next)));
 
 
   schedule$: Observable<ScheduleItem[]> | Observable<any> = this.date$
-    .pipe(tap((next: any) => {
-      this.store.set('date', next)
-    }))
+    .pipe(tap((next: any) => this.store.set('date', next)))
     .map((day: any) => {
-      console.log(day)
 
       const startAt = (
         new Date(day.getFullYear(), day.getMonth(), day.getDate())
@@ -100,23 +93,19 @@ export class ScheduleService {
 
     })
     .pipe(
-      switchMap(async ({ startAt, endAt }: any) => {
-        this.getSchedule(startAt, endAt)
-      })
+      switchMap(async ({ startAt, endAt }: any) => this.getSchedule(startAt, endAt))
     )
     .map((data: any) => {
 
-      const mapped: ScheduleList = {};
-      if (data) {
-        debugger
-        for (const prop of data) {
-          if (!mapped[prop.section]) {
-            mapped[prop.section] = prop;
-          }
+      let mapped: ScheduleList = {};
+      data.forEach((prop: any) => {
+        if (!mapped[prop.payload.val().section]) {
+          mapped[prop.payload.val().section] = prop.payload.val();
         }
-
-      }
-      return mapped;
+        mapped = mapped
+        // console.log('mapped', mapped)
+      })
+      return mapped
     })
     .pipe(tap((next: any) => this.store.set('schedule', next)));
 
@@ -156,7 +145,7 @@ export class ScheduleService {
 
     return this.db.list(`schedule/${this.uid}`, ref => {
       return ref.orderByChild('timestamp').startAt(startAt).endAt(endAt)  //substituted query:{.......}
-    })
+    }).stateChanges()
 
   }
 }
